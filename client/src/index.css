@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* Arcade theme tokens -> usable as Tailwind utilities
+   (font-pixel, font-mono, bg-arcade-yellow, text-arcade-red, shadow-pixel, ...) */
+@theme {
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-arcade-yellow: #ffd400;
+  --color-arcade-red: #ff3b3b;
+
+  --shadow-pixel: 4px 4px 0 #000;
+  --shadow-pixel-sm: 2px 2px 0 #000;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-mono);
+    color: #000;
+    background-color: #fafafa;
+    /* Subtle dot grid behind everything */
+    background-image: radial-gradient(rgb(0 0 0 / 0.14) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  /* Pixel fonts look blurry when smoothed */
+  .font-pixel {
+    -webkit-font-smoothing: none;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  /* Hard-edged card: thick black border + offset pixel shadow */
+  .pixel-card {
+    background-color: #fff;
+    border: 3px solid #000;
+    box-shadow: var(--shadow-pixel);
+  }
+
+  /* Tactile arcade button: presses "into" its shadow on hover/click */
+  .pixel-btn {
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 0.9rem 1.25rem;
+    border: 3px solid #000;
+    box-shadow: var(--shadow-pixel);
+    cursor: pointer;
+    transition: transform 60ms linear, box-shadow 60ms linear;
+  }
+  .pixel-btn:hover:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-pixel-sm);
+  }
+  .pixel-btn:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+  .pixel-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .pixel-btn:focus-visible {
+    outline: 3px solid var(--color-arcade-red);
+    outline-offset: 3px;
+  }
+}
